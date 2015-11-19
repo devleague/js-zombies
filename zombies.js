@@ -7,7 +7,11 @@
  * @param {string} name     The item's name.
  * @property {string} name
  */
-
+ var item = new Item();
+ 
+function Item (name) {
+  this.name = name;
+}
 
 /**
  * Class => Weapon(name, damage)
