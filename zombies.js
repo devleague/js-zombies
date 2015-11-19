@@ -90,12 +90,19 @@ function Weapon (name, damage) {
 var player = new Player('Chaz', 100, 50, 50);
 
 function Player (name, health, strength, speed) {
+  var pack = [];
+  var maxHealth = this.health;
+
   this.name = name;
   this.health = health;
   this.strength = strength;
   this.speed = speed;
   this.isAlive = true;
   this.equipped = false;
+  
+  this.getPack = function () {
+    return pack;
+  };
 }
 
 /**
