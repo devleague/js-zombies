@@ -91,7 +91,7 @@ var player = new Player('Chaz', 100, 50, 50);
 
 function Player (name, health, strength, speed) {
   var pack = [];
-  var maxHealth = this.health;
+  var maxHealth = health;
 
   this.name = name;
   this.health = health;
@@ -99,9 +99,13 @@ function Player (name, health, strength, speed) {
   this.speed = speed;
   this.isAlive = true;
   this.equipped = false;
-  
+
   this.getPack = function () {
     return pack;
+  };
+
+  this.getMaxHealth = function () {
+    return maxHealth;
   };
 }
 
