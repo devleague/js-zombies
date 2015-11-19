@@ -7,8 +7,8 @@
  * @param {string} name     The item's name.
  * @property {string} name
  */
- var item = new Item();
- 
+var item = new Item();
+
 function Item (name) {
   this.name = name;
 }
@@ -28,7 +28,12 @@ function Item (name) {
  * @param {number} damage   The weapon's damage.
  * @property {number} damage
  */
+var weapon = new Weapon();
 
+function Weapon (name, damage) {
+  this.name = name;
+  this.damage = damage;
+}
 
 /**
  * Weapon Extends Item Class
@@ -82,7 +87,16 @@ function Item (name) {
  * @property {method} getPack              Returns private variable `pack`.
  * @property {method} getMaxHealth         Returns private variable `maxHealth`.
  */
+var player = new Player('Chaz', 100, 50, 50);
 
+function Player (name, health, strength, speed) {
+  this.name = name;
+  this.health = health;
+  this.strength = strength;
+  this.speed = speed;
+  this.isAlive = true;
+  this.equipped = false;
+}
 
 /**
  * Player Class Method => checkPack()
