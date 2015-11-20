@@ -202,6 +202,10 @@ Player.prototype.discardItem = function (item) {
  * @name equip
  * @param {Weapon} itemToEquip  The weapon item to equip.
  */
+Player.prototype.equip = function (itemToEquip) {
+  var playerPack = this.getPack();
+
+};
 
 
 /**
@@ -251,6 +255,15 @@ Player.prototype.discardItem = function (item) {
  * @name equippedWith
  * @return {string/boolean}   Weapon name or false if nothing is equipped.
  */
+Player.prototype.equippedWith = function () {
+  var isEquipped = this.equipped();
+  if(Player.prototype.equipped === false) {
+    console.log('You have nothing equipped!');
+    return false;
+  } else {
+    return isEquipped;
+  }
+};
 
 
 /**
