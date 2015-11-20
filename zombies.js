@@ -176,7 +176,7 @@ Player.prototype.discardItem = function (item) {
     console.log('Nothing was discarded since the item could not be found');
     return false;
   } else {
-    playerPack.splice(item);
+    playerPack.splice(playerPack.indexOf(item), 1);
     console.log(item + ' was discarded');
     return true;
   }
