@@ -28,13 +28,18 @@ function Item (name) {
  */
 function Weapon (name, damage) {
   this.damage = damage;
+  Item.call(this, name);
 }
 
 /**
  * Weapon Extends Item Class
  * -----------------------------
  */
-
+Weapon.prototype = Object.create(Item.prototype, {
+  constructor: {
+    value: Weapon
+  }
+});
 
 
 /**
@@ -54,14 +59,18 @@ function Weapon (name, damage) {
  */
 function Food (name, energy) {
   this.energy = energy;
+  Item.call(this, name);
 }
 
 /**
  * Food Extends Item Class
  * -----------------------------
  */
-
-
+Food.prototype = Object.create(Item.prototype, {
+  constructor: {
+    value: Food
+  }
+});
 
 /**
  * Class => Player(name, health, strength, speed)
@@ -87,12 +96,14 @@ function Food (name, energy) {
 function Player (name, health, strength, speed) {
   var pack = [];
   var maxHealth = health;
+
   this.name = name;
   this.health = health;
   this.strength = strength;
   this.speed = speed;
   this.isAlive = true;
   this.equipped = false;
+
   this.getPack = function () {
     return pack;
   };
@@ -113,7 +124,7 @@ function Player (name, health, strength, speed) {
  * @name checkPack
  */
 Player.prototype.checkPack = function () {
-  console.log(Player.prototype.getpack);
+  console.log(this.getPack().join());
 };
 
 /**
@@ -135,14 +146,13 @@ Player.prototype.checkPack = function () {
  */
 Player.prototype.takeItem = function (item) {
   var playerPack = this.getPack();
-  if(playerPack.length >= 3) {
+  if(playerPack.length > 2) {
     console.log('The Pack is full so the item could not be stored.');
     return false;
-  } else {
-    playerPack.push(item);
-    console.log(item + ' was sucessfully stored in the pack.');
-    return true;
   }
+  playerPack.push(item);
+  console.log(this.name + ' stored ' + item + ' sucessfully in the pack.');
+  return true;
 };
 
 /**
@@ -172,14 +182,13 @@ Player.prototype.takeItem = function (item) {
  */
 Player.prototype.discardItem = function (item) {
   var playerPack = this.getPack();
-  if(!playerPack.indexOf(item)) {
+  if (!playerPack.indexOf(item)) {
     console.log('Nothing was discarded since the item could not be found');
     return false;
-  } else {
-    playerPack.splice(playerPack.indexOf(item), 1);
-    console.log(item + ' was discarded');
-    return true;
   }
+  playerPack.splice(playerPack.indexOf(item), 1);
+  console.log(item + ' was discarded');
+  return true;
 };
 
 
@@ -204,9 +213,24 @@ Player.prototype.discardItem = function (item) {
  */
 Player.prototype.equip = function (itemToEquip) {
   var playerPack = this.getPack();
+  var toEquip;
 
+  if (!(itemToEquip instanceof Weapon)) {
+    return false;
+  }
+
+  var itemIndex = playerPack.indexOf(itemToEquip);
+  if (itemIndex > -1) {
+    toEquip = playerPack.splice(itemIndex, 1)[0];
+  } else {
+    return false;
+  }
+
+  if (this.equipped) {
+    playerPack.push(this.equipped);
+  }
+  this.equipped = toEquip;
 };
-
 
 /**
  * Player Class Method => eat(itemToEat)
@@ -226,6 +250,29 @@ Player.prototype.equip = function (itemToEquip) {
  * @name eat
  * @param {Food} itemToEat  The food item to eat.
  */
+Player.prototype.eat = function (itemToEat) {
+  var playerPack = this.getPack();
+  var playerMaxHealth = this.getMaxHealth();
+  var toEat;
+
+  if (!(itemToEat instanceof Food)) {
+    return false;
+  }
+
+  var itemIndex = playerPack.indexOf(itemToEat);
+  if (itemIndex > -1) {
+    toEat = playerPack.splice(itemIndex, 1)[0];
+  } else {
+    return false;
+  }
+
+
+
+  // if (this.equipped) {
+  //   playerPack.push(this.equipped);
+  // }
+  // this.equipped = toEquip;
+};
 
 
 /**
@@ -257,7 +304,7 @@ Player.prototype.equip = function (itemToEquip) {
  */
 Player.prototype.equippedWith = function () {
   var isEquipped = this.equipped();
-  if(Player.prototype.equipped === false) {
+  if(isEquipped === false) {
     console.log('You have nothing equipped!');
     return false;
   } else {
