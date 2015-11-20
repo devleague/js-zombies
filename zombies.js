@@ -31,15 +31,19 @@ function Item (name) {
 var weapon = new Weapon();
 
 function Weapon (name, damage) {
-  this.name = name;
   this.damage = damage;
+  Item.call(this, name);
 }
 
 /**
  * Weapon Extends Item Class
  * -----------------------------
  */
-
+Weapon.prototype = Object.create(Item.prototype, {
+  constructor: {
+    value: Weapon
+  }
+});
 
 
 /**
@@ -57,13 +61,20 @@ function Weapon (name, damage) {
  * @param {number} energy     The energy the food provides.
  * @property {number} energy
  */
-
+function Food (name, energy) {
+  this.energy = energy;
+  Item.call(this, name);
+}
 
 /**
  * Food Extends Item Class
  * -----------------------------
  */
-
+Food.prototype = Object.create(Item.prototype, {
+  constructor: {
+    value: Food
+  }
+});
 
 
 /**
@@ -122,7 +133,7 @@ function Player (name, health, strength, speed) {
  * @name checkPack
  */
   Player.prototype.checkPack = function () {
-    console.log(player.getPack());
+    console.log(player.getPack().join());
   };
 
 
@@ -143,9 +154,18 @@ function Player (name, health, strength, speed) {
  * @param {Item/Weapon/Food} item   The item to take.
  * @return {boolean} true/false     Whether player was able to store item in pack.
  */
+var torch = new Item('Torch');
+
 Player.prototype.takeItem = function (item) {
-  // var playerPack = player.checkPack();
-  
+  var playerPack = this.getPack();
+
+  if (playerPack.length > 2) {
+    console.log('The pack is full. ' + item + ' could not be stored.');
+    return false;
+  }
+  playerPack.push(item);
+  console.log(this.name + ' added ' + item);
+  return true;
 };
 
 /**
@@ -173,7 +193,19 @@ Player.prototype.takeItem = function (item) {
  * @param {Item/Weapon/Food} item   The item to discard.
  * @return {boolean} true/false     Whether player was able to remove item from pack.
  */
+Player.prototype.discardItem = function (item) {
+  var playerPack = this.getPack();
+  var itemLocation = playerPack.indexOf(item);
+  var itemRemoved;
 
+  if (itemLocation > -1) {
+    itemRemoved = playerPack.splice(itemLocation, 1);
+    console.log(this.name + ' removed ' + item);
+    return true;
+  }
+  console.log('Nothing was discarded. Item was not found.');
+  return false;
+};
 
 /**
  * Player Class Method => equip(itemToEquip)
@@ -194,7 +226,26 @@ Player.prototype.takeItem = function (item) {
  * @name equip
  * @param {Weapon} itemToEquip  The weapon item to equip.
  */
+Player.prototype.equip = function (itemToEquip) {
+  var playerPack = this.getPack();
+  var weaponFound;
 
+  if (!(itemToEquip instanceof Weapon)) {
+    return false;
+  }
+  var weaponLocation = playerPack.indexOf(itemToEquip);
+
+  if (weaponLocation > -1) {
+    weaponFound = playerPack.splice(weaponLocation, 1)[0];
+  } else {
+    return false;
+  }
+
+  if (this.equipped) {
+    playerPack.push(this.equipped);
+  }
+  this.equipped = weaponFound;
+};
 
 /**
  * Player Class Method => eat(itemToEat)
@@ -214,7 +265,15 @@ Player.prototype.takeItem = function (item) {
  * @name eat
  * @param {Food} itemToEat  The food item to eat.
  */
+Player.prototype.eat = function (itemToEat) {
+  var playerPack = this.getPack();
+  var foodFound;
 
+  if (!(itemToEat instanceof Food)) {
+    return false;
+  }
+  
+};
 
 /**
  * Player Class Method => useItem(item)
