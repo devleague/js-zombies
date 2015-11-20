@@ -266,12 +266,10 @@ Player.prototype.eat = function (itemToEat) {
     return false;
   }
 
-
-
-  // if (this.equipped) {
-  //   playerPack.push(this.equipped);
-  // }
-  // this.equipped = toEquip;
+  this.health += toEat.energy;
+  if (this.health > playerMaxHealth) {
+    this.health = playerMaxHealth;
+  }
 };
 
 
@@ -287,6 +285,14 @@ Player.prototype.eat = function (itemToEat) {
  * @name useItem
  * @param {Item/Weapon/Food} item   The item to use.
  */
+Player.prototype.useItem = function (item) {
+  if (item instanceof Weapon) {
+    this.equip(item);
+  }
+  if (item instanceof Food) {
+    this.eat(item);
+  }
+};
 
 
 /**
@@ -304,7 +310,8 @@ Player.prototype.eat = function (itemToEat) {
  */
 Player.prototype.equippedWith = function () {
   var isEquipped = this.equipped();
-  if(isEquipped === false) {
+
+  if(!isEquipped) {
     console.log('You have nothing equipped!');
     return false;
   } else {
