@@ -146,12 +146,14 @@ Player.prototype.checkPack = function () {
  */
 Player.prototype.takeItem = function (item) {
   var playerPack = this.getPack();
+  console.log(playerPack);
   if(playerPack.length > 2) {
     console.log('The Pack is full so the item could not be stored.');
     return false;
   }
   playerPack.push(item);
-  console.log(this.name + ' stored ' + item + ' sucessfully in the pack.');
+  console.log(playerPack);
+  console.log(this.name + ' stored ' + item.name + ' sucessfully in the pack.');
   return true;
 };
 
@@ -182,7 +184,8 @@ Player.prototype.takeItem = function (item) {
  */
 Player.prototype.discardItem = function (item) {
   var playerPack = this.getPack();
-  if (!playerPack.indexOf(item)) {
+  console.log(playerPack);
+  if (playerPack.indexOf(item) < 0) {
     console.log('Nothing was discarded since the item could not be found');
     return false;
   }
@@ -225,11 +228,13 @@ Player.prototype.equip = function (itemToEquip) {
   } else {
     return false;
   }
+    console.log('before push', this.equipped);
 
   if (this.equipped) {
     playerPack.push(this.equipped);
   }
   this.equipped = toEquip;
+  console.log('after puah', this.equipped);
 };
 
 /**
@@ -286,11 +291,17 @@ Player.prototype.eat = function (itemToEat) {
  * @param {Item/Weapon/Food} item   The item to use.
  */
 Player.prototype.useItem = function (item) {
-  if (item instanceof Weapon) {
-    this.equip(item);
-  }
-  if (item instanceof Food) {
-    this.eat(item);
+  var playerPack = this.getPack();
+  var itemIndex = playerPack.indexOf(item);
+  if (itemIndex > -1) {
+    if (item instanceof Weapon) {
+      this.equip(item);
+    }
+    if (item instanceof Food) {
+      this.eat(item);
+    }
+  } else {
+    return false;
   }
 };
 
@@ -309,12 +320,12 @@ Player.prototype.useItem = function (item) {
  * @return {string/boolean}   Weapon name or false if nothing is equipped.
  */
 Player.prototype.equippedWith = function () {
-  if(this.equipped === false) {
-    console.log('You have nothing equipped!');
-    return false;
+  if(this.equipped) {
+    console.log(this.name + ' is equipped with ' + this.equipped.name);
+    return this.equipped.name;
   }
-  console.log(this.name + ' is equipped with ' + this.equipped.name);
-  return this.equipped.name;
+  console.log('You have nothing equipped!');
+  return false;
 };
 
 /**
