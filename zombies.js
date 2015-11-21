@@ -190,7 +190,7 @@ Player.prototype.takeItem = function (item) {
  */
 Player.prototype.discardItem = function (item) {
   var playerPack = this.getPack();
-  if (!playerPack.indexOf(item)) {
+  if (playerPack.indexOf(item) < 0) {
       console.log("Nothing disgarded");
       return false;
   } else{
@@ -255,12 +255,26 @@ Player.prototype.equip = function (itemToEquip){
  * @param {Food} itemToEat  The food item to eat.
  */
 Player.prototype.eat = function (itemToEat){
-  var pack = this.food();
+  var pack = this.getPack();
   if(!(itemToEat instanceof Food)){
     return false;
   }
   var itemIndex = pack.indexOf(itemToEat);
   
+  console.log(itemIndex);
+  if(itemIndex > -1){
+    var itemFound = pack.splice(itemIndex, 1)[0];
+    
+    if(this.health <= this.getMaxHealth()){
+      if(itemFound.energy < (this.getMaxHealth() - this.health)) {
+        this.health = this.health + itemFound.energy;
+      } else{
+        this.health = this.getMaxHealth();
+      }
+    }else{
+      return false;
+    }
+  }  
 };
 
 /**
@@ -276,7 +290,12 @@ Player.prototype.eat = function (itemToEat){
  * @param {Item/Weapon/Food} item   The item to use.
  */
 Player.prototype.useItem = function (item) {
-
+  if(item instanceof Weapon){
+   this.equip(item);
+  }
+  if(item instanceof Food){
+    this.eat(item);
+  }
 };
 
 /**
@@ -293,7 +312,14 @@ Player.prototype.useItem = function (item) {
  * @return {string/boolean}   Weapon name or false if nothing is equipped.
  */
 Player.prototype.equippedWith = function (){
-
+  // debugger;
+  if (this.equipped) {
+    console.log(this.name, this.equipped.name);
+    return this.equipped.name;
+  } else{
+    console.log("Nothing equipped");
+    return false;
+  }  
 };
 
 /**
