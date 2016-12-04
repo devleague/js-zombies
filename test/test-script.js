@@ -456,6 +456,23 @@ describe('FastZombie', function() {
     var charger = new FastZombie(30, 10, 25);
     charger.isAlive.should.equal(true);
   });
+
+  it('should have a speedMultiplier attribute', function() {
+    var charger = new FastZombie(30, 10, 25, 2);
+    charger.speedMultiplier.should.equal(2);
+  });
+
+  it('should have a buffSpeed method', function() {
+    var charger = new FastZombie(30, 10, 25, 2);
+    charger.buffSpeed.should.exist;
+  });
+
+  it('should multiply zombies speed by speedMultiplier when buffSpeed called', function() {
+    var charger = new FastZombie(30, 10, 25, 2);
+    var buffedSpeed = charger.speed * charger.speedMultiplier;
+    charger.buffSpeed();
+    charger.speed.should.equal(buffedSpeed);
+  })
 }); // end FastZombie specs
 
 describe('StrongZombie', function() {
@@ -496,6 +513,22 @@ describe('StrongZombie', function() {
     var tank = new StrongZombie(30, 30, 5);
     tank.isAlive.should.equal(true);
   });
+  it('should have a speedMultiplier attribute', function() {
+    var tank = new StrongZombie(30, 10, 25, 2);
+    tank.strengthMultiplier.should.equal(2);
+  });
+
+  it('should have a buffSpeed method', function() {
+    var tank = new StrongZombie(30, 10, 25, 2);
+    tank.buffStrength.should.exist;
+  });
+
+  it('should multiply zombies speed by strengthMultipler when buffStrength called', function() {
+    var tank = new StrongZombie(30, 10, 25, 2);
+    var buffedStrength = tank.strength * tank.strengthMultiplier;
+    tank.buffStrength();
+    tank.strength.should.equal(buffedStrength);
+  })
 }); // end StrongZombie specs
 
 describe('RangedZombie', function() {
@@ -536,6 +569,31 @@ describe('RangedZombie', function() {
     var spitter = new RangedZombie(30, 15, 15);
     spitter.isAlive.should.equal(true);
   });
+
+  it('should have a range attribute', function() {
+    var spitter = new RangedZombie(30, 15, 15);
+    spitter.range.should.equal(225);
+  })
+
+  it('should have a puke method', function() {
+    var spitter = new RangedZombie(30, 15, 15);
+    spitter.puke.should.exist;
+  })
+
+  it('should print out a message including the range it pukes when zombie pukes', function() {
+    sandbox.stub(console, "log");
+    var spitter = new RangedZombie(30, 15, 15);
+    spitter.puke();
+    sinon.assert.called(console.log);
+  })
+
+  it('should decrease health by 1 everytime zombie pukes', function() {
+    var spitter = new RangedZombie(30, 15, 15);
+    spitter.puke();
+    spitter.puke();
+    spitter.health.should.equal(28);
+  })
+
 }); // end RangedZombie specs
 
 describe('ExplodingZombie', function() {
@@ -576,4 +634,22 @@ describe('ExplodingZombie', function() {
     var boomer = new ExplodingZombie(30, 20, 10);
     boomer.isAlive.should.equal(true);
   });
+
+  it('should have an explode method', function() {
+    var boomer = new ExplodingZombie(30, 20, 10);
+    boomer.explode.should.exist;
+  })
+
+  it('should print out a message when exploding', function() {
+    sandbox.stub(console, "log");
+    var boomer = new ExplodingZombie(30, 20, 10);
+    boomer.explode()
+    sinon.assert.called(console.log);
+  })
+
+  it('should not be alive when exploded', function() {
+    var boomer = new ExplodingZombie(30, 20, 10);
+    boomer.explode()
+    boomer.isAlive.should.equal(false);
+  })
 }); // end ExplodingZombie specs
