@@ -513,17 +513,17 @@ describe('StrongZombie', function() {
     var tank = new StrongZombie(30, 30, 5);
     tank.isAlive.should.equal(true);
   });
-  it('should have a speedMultiplier attribute', function() {
+  it('should have a strengthMultiplier attribute', function() {
     var tank = new StrongZombie(30, 10, 25, 2);
     tank.strengthMultiplier.should.equal(2);
   });
 
-  it('should have a buffSpeed method', function() {
+  it('should have a buffStrength method', function() {
     var tank = new StrongZombie(30, 10, 25, 2);
     tank.buffStrength.should.exist;
   });
 
-  it('should multiply zombies speed by strengthMultipler when buffStrength called', function() {
+  it('should multiply zombies strength by strengthMultipler when buffStrength called', function() {
     var tank = new StrongZombie(30, 10, 25, 2);
     var buffedStrength = tank.strength * tank.strengthMultiplier;
     tank.buffStrength();
