@@ -387,44 +387,48 @@ describe('Player', function() {
   }); // end .equippedWith specs
 }); // end Player specs
 
+var zombie
+
 describe('Zombie', function() {
+  beforeEach(function() {
+    zombie = new Zombie(30, 10, 5);
+  });
   it('should be a function', function() {
     expect(Zombie).to.be.a('function');
   });
 
   it('should have health', function() {
-    var zombie = new Zombie(30, 10, 5);
     zombie.health.should.equal(30);
   });
 
   it('should have a strength attribute', function() {
-    var zombie = new Zombie(30, 10, 5);
     zombie.strength.should.equal(10);
   });
 
   it('should have a speed attribute', function() {
-    var zombie = new Zombie(30, 10, 5);
     zombie.speed.should.equal(5);
   });
 
   it('should have a private maxHealth variable', function() {
-    var zombie = new Zombie(30, 10, 5);
     expect(zombie.maxHealth).to.be.undefined;
   });
 
   it('should be alive', function() {
-    var zombie = new Zombie(30, 10, 5);
     zombie.isAlive.should.equal(true);
   });
 }); // end Zombie specs
 
+var charger;
+
 describe('FastZombie', function() {
+  beforeEach(function() {
+    charger = new FastZombie(30, 10, 25);
+  });
   it('should be a function', function() {
     expect(FastZombie).to.be.a('function');
   });
 
   it('should be a Zombie', function() {
-    var charger = new FastZombie(30, 10, 25);
     expect(charger instanceof Zombie).to.be.true;
   });
 
@@ -433,55 +437,51 @@ describe('FastZombie', function() {
   });
 
   it('should have health', function() {
-    var charger = new FastZombie(30, 10, 25);
     charger.health.should.equal(30);
   });
 
   it('should have a strength attribute', function() {
-    var charger = new FastZombie(30, 10, 25);
     charger.strength.should.equal(10);
   });
 
   it('should have a speed attribute', function() {
-    var charger = new FastZombie(30, 10, 25);
     charger.speed.should.equal(25);
   });
 
   it('should have a private maxHealth variable', function() {
-    var charger = new FastZombie(30, 10, 25);
     expect(charger.maxHealth).to.be.undefined;
   });
 
   it('should be alive', function() {
-    var charger = new FastZombie(30, 10, 25);
     charger.isAlive.should.equal(true);
   });
 
   it('should have a speedMultiplier attribute', function() {
-    var charger = new FastZombie(30, 10, 25, 2);
     charger.speedMultiplier.should.equal(2);
   });
 
   it('should have a buffSpeed method', function() {
-    var charger = new FastZombie(30, 10, 25, 2);
     charger.buffSpeed.should.exist;
   });
 
   it('should multiply zombies speed by speedMultiplier when buffSpeed called', function() {
-    var charger = new FastZombie(30, 10, 25, 2);
     var buffedSpeed = charger.speed * charger.speedMultiplier;
     charger.buffSpeed();
     charger.speed.should.equal(buffedSpeed);
   })
 }); // end FastZombie specs
 
+var tank;
+
 describe('StrongZombie', function() {
+  beforeEach(function() {
+    tank = new StrongZombie(30, 10, 25, 2);
+  });
   it('should be a function', function() {
     expect(StrongZombie).to.be.a('function');
   });
 
   it('should be a Zombie', function() {
-    var tank = new StrongZombie(30, 30, 5);
     expect(tank instanceof Zombie).to.be.true;
   });
 
@@ -510,34 +510,34 @@ describe('StrongZombie', function() {
   });
 
   it('should be alive', function() {
-    var tank = new StrongZombie(30, 30, 5);
     tank.isAlive.should.equal(true);
   });
   it('should have a strengthMultiplier attribute', function() {
-    var tank = new StrongZombie(30, 10, 25, 2);
     tank.strengthMultiplier.should.equal(2);
   });
 
   it('should have a buffStrength method', function() {
-    var tank = new StrongZombie(30, 10, 25, 2);
     tank.buffStrength.should.exist;
   });
 
   it('should multiply zombies strength by strengthMultipler when buffStrength called', function() {
-    var tank = new StrongZombie(30, 10, 25, 2);
     var buffedStrength = tank.strength * tank.strengthMultiplier;
     tank.buffStrength();
     tank.strength.should.equal(buffedStrength);
   })
 }); // end StrongZombie specs
 
+var spitter;
+
 describe('RangedZombie', function() {
+  beforeEach(function() {
+    spitter = new RangedZombie(30, 15, 15);
+  });
   it('should be a function', function() {
     expect(RangedZombie).to.be.a('function');
   });
 
   it('should be a Zombie', function() {
-    var spitter = new RangedZombie(30, 15, 15);
     expect(spitter instanceof Zombie).to.be.true;
   });
 
@@ -546,63 +546,58 @@ describe('RangedZombie', function() {
   });
 
   it('should have health', function() {
-    var spitter = new RangedZombie(30, 15, 15);
     spitter.health.should.equal(30);
   });
 
   it('should have a strength attribute', function() {
-    var spitter = new RangedZombie(30, 15, 15);
     spitter.strength.should.equal(15);
   });
 
   it('should have a speed attribute', function() {
-    var spitter = new RangedZombie(30, 15, 15);
     spitter.speed.should.equal(15);
   });
 
   it('should have a private maxHealth variable', function() {
-    var spitter = new RangedZombie(30, 15, 15);
     expect(spitter.maxHealth).to.be.undefined;
   });
 
   it('should be alive', function() {
-    var spitter = new RangedZombie(30, 15, 15);
     spitter.isAlive.should.equal(true);
   });
 
   it('should have a range attribute', function() {
-    var spitter = new RangedZombie(30, 15, 15);
     spitter.range.should.equal(225);
-  })
+  });
 
   it('should have a puke method', function() {
-    var spitter = new RangedZombie(30, 15, 15);
     spitter.puke.should.exist;
-  })
+  });
 
   it('should print out a message including the range it pukes when zombie pukes', function() {
     sandbox.stub(console, "log");
-    var spitter = new RangedZombie(30, 15, 15);
     spitter.puke();
     sinon.assert.called(console.log);
-  })
+  });
 
   it('should decrease health by 1 everytime zombie pukes', function() {
-    var spitter = new RangedZombie(30, 15, 15);
     spitter.puke();
     spitter.puke();
     spitter.health.should.equal(28);
-  })
+  });
 
 }); // end RangedZombie specs
 
+var boomer;
+
 describe('ExplodingZombie', function() {
+  beforeEach(function() {
+    boomer = new ExplodingZombie(30, 20, 10);
+  });
   it('should be a function', function() {
     expect(ExplodingZombie).to.be.a('function');
   });
 
   it('should be a Zombie', function() {
-    var boomer = new ExplodingZombie(30, 20, 10);
     expect(boomer instanceof Zombie).to.be.true;
   });
 
@@ -611,44 +606,36 @@ describe('ExplodingZombie', function() {
   });
 
   it('should have health', function() {
-    var boomer = new ExplodingZombie(30, 20, 10);
     boomer.health.should.equal(30);
   });
 
   it('should have a strength attribute', function() {
-    var boomer = new ExplodingZombie(30, 20, 10);
     boomer.strength.should.equal(20);
   });
 
   it('should have a speed attribute', function() {
-    var boomer = new ExplodingZombie(30, 20, 10);
     boomer.speed.should.equal(10);
   });
 
   it('should have a private maxHealth variable', function() {
-    var boomer = new ExplodingZombie(30, 20, 10);
     expect(boomer.maxHealth).to.be.undefined;
   });
 
   it('should be alive', function() {
-    var boomer = new ExplodingZombie(30, 20, 10);
     boomer.isAlive.should.equal(true);
   });
 
   it('should have an explode method', function() {
-    var boomer = new ExplodingZombie(30, 20, 10);
     boomer.explode.should.exist;
   })
 
   it('should print out a message when exploding', function() {
     sandbox.stub(console, "log");
-    var boomer = new ExplodingZombie(30, 20, 10);
     boomer.explode()
     sinon.assert.called(console.log);
   })
 
   it('should not be alive when exploded', function() {
-    var boomer = new ExplodingZombie(30, 20, 10);
     boomer.explode()
     boomer.isAlive.should.equal(false);
   })
