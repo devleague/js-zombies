@@ -387,9 +387,9 @@ describe('Player', function() {
   }); // end .equippedWith specs
 }); // end Player specs
 
-var zombie
 
 describe('Zombie', function() {
+  var zombie
   beforeEach(function() {
     zombie = new Zombie(30, 10, 5);
   });
@@ -418,9 +418,9 @@ describe('Zombie', function() {
   });
 }); // end Zombie specs
 
-var charger;
 
 describe('FastZombie', function() {
+  var charger;
   beforeEach(function() {
     charger = new FastZombie(30, 10, 25);
   });
@@ -471,9 +471,9 @@ describe('FastZombie', function() {
   })
 }); // end FastZombie specs
 
-var tank;
 
 describe('StrongZombie', function() {
+  var tank;
   beforeEach(function() {
     tank = new StrongZombie(30, 10, 25, 2);
   });
@@ -527,9 +527,9 @@ describe('StrongZombie', function() {
   })
 }); // end StrongZombie specs
 
-var spitter;
 
 describe('RangedZombie', function() {
+  var spitter;
   beforeEach(function() {
     spitter = new RangedZombie(30, 15, 15);
   });
@@ -587,9 +587,9 @@ describe('RangedZombie', function() {
 
 }); // end RangedZombie specs
 
-var boomer;
 
 describe('ExplodingZombie', function() {
+  var boomer;
   beforeEach(function() {
     boomer = new ExplodingZombie(30, 20, 10);
   });
