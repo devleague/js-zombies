@@ -227,7 +227,7 @@
 
 
 /**
- * Class => FastZombie(health, strength, speed)
+ * Class => FastZombie(health, strength, speed, speedMultiplier)
  * -----------------------------
  * Creates a fast zombie.
  *
@@ -255,6 +255,7 @@
    * Multiply zombie speed by speed multiplier.
    */
 
+
 /**
  * Class => StrongZombie(health, strength, speed)
  * -----------------------------
@@ -265,12 +266,12 @@
  *   while passing in the 3 Zombie constructor params
  *
  * @name StrongZombie
- * @param {number} health           The zombie's health.
- * @param {number} strength         The zombie's strength.
- * @param {number} speed            The zombie's speed.
-
+ * @param {number} health              The zombie's health.
+ * @param {number} strength            The zombie's strength.
+ * @param {number} speed               The zombie's speed.
+ * @param {number} strengthMultiplier  The zombie's strength multipler
+ *
  */
-
 
 /**
  * StrongZombie Extends Zombie Class
@@ -281,7 +282,9 @@
   /**
    * StrongZombie Class Method => buffStrength()
    * -----------------------------
+   * Multiply zombie strength by strength multiplier
    */
+
 
 /**
  * Class => RangedZombie(health, strength, speed)
@@ -312,6 +315,7 @@
    * Everytime a zombie pukes, its health is decreased by 1.
    */
 
+
 /**
  * Class => ExplodingZombie(health, strength, speed)
  * -----------------------------
@@ -336,7 +340,8 @@
    /**
    * ExplodingZombie Class Method => explode()
    * -----------------------------
-   * Zombie explodes, printing out a message and kills off the zombie.
+   * Zombie explodes, printing out a message and kills off the zombie, setting its health to 0
+   * and isAlive property to false.
    */
 
 /**

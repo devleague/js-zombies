@@ -422,7 +422,7 @@ describe('Zombie', function() {
 describe('FastZombie', function() {
   var charger;
   beforeEach(function() {
-    charger = new FastZombie(30, 10, 25);
+    charger = new FastZombie(30, 10, 25, 2);
   });
   it('should be a function', function() {
     expect(FastZombie).to.be.a('function');
