@@ -225,7 +225,6 @@
  * @property {boolean} isAlive      Default value should be `true`.
  */
 
-
 /**
  * Class => FastZombie(health, strength, speed, speedMultiplier)
  * -----------------------------
@@ -248,6 +247,7 @@
  * FastZombie Extends Zombie Class
  * -----------------------------
  */
+
 
   /**
    * FastZombie Class Method => buffSpeed()
@@ -284,7 +284,6 @@
    * -----------------------------
    * Multiply zombie strength by strength multiplier
    */
-
 
 /**
  * Class => RangedZombie(health, strength, speed)
