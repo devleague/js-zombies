@@ -225,9 +225,19 @@
  * @property {boolean} isAlive      Default value should be `true`.
  */
 
+class Zombie {
+  constructor(health, strength, speed) {
+    this.name = "Zombie";
+    this.health = health;
+    this.strength = strength;
+    this.speed = speed;
+    this._maxHealth = health;
+    this.isAlive = true;
+  }
+}
 
 /**
- * Class => FastZombie(health, strength, speed)
+ * Class => FastZombie(health, strength, speed, speedMultiplier)
  * -----------------------------
  * Creates a fast zombie.
  *
@@ -248,6 +258,18 @@
  * FastZombie Extends Zombie Class
  * -----------------------------
  */
+class FastZombie extends Zombie {
+  constructor(health, strength, speed, speedMultiplier) {
+    super(health, strength, speed);
+    this.speedMultiplier = speedMultiplier;
+  }
+
+  buffSpeed() {
+    console.log('this.speed', this.speed);
+    console.log('this.speedMultiplier', this.speedMultiplier)
+    this.speed = this.speed * this.speedMultiplier;
+  }
+}
 
   /**
    * FastZombie Class Method => buffSpeed()
@@ -265,10 +287,11 @@
  *   while passing in the 3 Zombie constructor params
  *
  * @name StrongZombie
- * @param {number} health           The zombie's health.
- * @param {number} strength         The zombie's strength.
- * @param {number} speed            The zombie's speed.
-
+ * @param {number} health              The zombie's health.
+ * @param {number} strength            The zombie's strength.
+ * @param {number} speed               The zombie's speed.
+ * @param {number} strengthMultiplier  The zombie's strength multipler
+ *
  */
 
 
@@ -281,8 +304,17 @@
   /**
    * StrongZombie Class Method => buffStrength()
    * -----------------------------
+   * Multiply zombie strength by strength multiplier
    */
-
+class StrongZombie extends Zombie {
+  constructor(health, strength, speed, strengthMultiplier) {
+    super(health, strength, speed)
+    this.strengthMultiplier = strengthMultiplier
+  }
+  buffStrength() {
+    this.strength = this.strength * this.strengthMultiplier
+  }
+}
 /**
  * Class => RangedZombie(health, strength, speed)
  * -----------------------------
@@ -304,13 +336,22 @@
  * RangedZombie Extends Zombie Class
  * -----------------------------
  */
-
+class RangedZombie extends Zombie {
+  constructor(health, strength, speed) {
+    super(health, strength, speed)
+      this.range = this.speed * this.strength
+  }
   /**
    * RangedZombie Class Method => puke() // throws equipped item
    * -----------------------------
    * Zombie pukes, printing out a message including how far it pukes using its range variable.
    * Everytime a zombie pukes, its health is decreased by 1.
    */
+  puke() {
+    this.health -= 1;
+    console.log(`A zombie pukes on you from ${this.range} feet away!`)
+  }
+}
 
 /**
  * Class => ExplodingZombie(health, strength, speed)
@@ -332,11 +373,21 @@
  * ExplodingZombie Extends Zombie Class
  * -----------------------------
  */
-
+class ExplodingZombie extends Zombie {
+  constructor(health, strength, speed) {
+    super(health, strength, speed)
+  }
+  explode() {
+    console.log('A zombie explodes, killing itself!');
+    this.health = 0;
+    this.isAlive = false;
+  }
+}
    /**
    * ExplodingZombie Class Method => explode()
    * -----------------------------
-   * Zombie explodes, printing out a message and kills off the zombie.
+   * Zombie explodes, printing out a message and kills off the zombie, setting its health to 0
+   * and isAlive property to false.
    */
 
 /**
