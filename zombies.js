@@ -225,9 +225,8 @@
  * @property {boolean} isAlive      Default value should be `true`.
  */
 
-
 /**
- * Class => FastZombie(health, strength, speed)
+ * Class => FastZombie(health, strength, speed, speedMultiplier)
  * -----------------------------
  * Creates a fast zombie.
  *
@@ -239,6 +238,8 @@
  * @param {number} health           The zombie's health.
  * @param {number} strength         The zombie's strength.
  * @param {number} speed            The zombie's speed.
+ * @param {number} speedMultiplier  A multiplier for the zombie's speed.
+ * @property {number} speedMultiplier
  */
 
 
@@ -247,6 +248,12 @@
  * -----------------------------
  */
 
+
+  /**
+   * FastZombie Class Method => buffSpeed()
+   * -----------------------------
+   * Multiply zombie speed by speed multiplier.
+   */
 
 
 /**
@@ -259,18 +266,24 @@
  *   while passing in the 3 Zombie constructor params
  *
  * @name StrongZombie
- * @param {number} health           The zombie's health.
- * @param {number} strength         The zombie's strength.
- * @param {number} speed            The zombie's speed.
+ * @param {number} health              The zombie's health.
+ * @param {number} strength            The zombie's strength.
+ * @param {number} speed               The zombie's speed.
+ * @param {number} strengthMultiplier  The zombie's strength multipler
+ *
  */
-
 
 /**
  * StrongZombie Extends Zombie Class
  * -----------------------------
+ * When zombie is below 50% health, multiply strength by strength multiplier.
  */
 
-
+  /**
+   * StrongZombie Class Method => buffStrength()
+   * -----------------------------
+   * Multiply zombie strength by strength multiplier
+   */
 
 /**
  * Class => RangedZombie(health, strength, speed)
@@ -285,6 +298,7 @@
  * @param {number} health           The zombie's health.
  * @param {number} strength         The zombie's strength.
  * @param {number} speed            The zombie's speed.
+ * @property {number} range         The zombie's range. Strength multiplied by Speed.
  */
 
 
@@ -293,6 +307,12 @@
  * -----------------------------
  */
 
+  /**
+   * RangedZombie Class Method => puke() // throws equipped item
+   * -----------------------------
+   * Zombie pukes, printing out a message including how far it pukes using its range variable.
+   * Everytime a zombie pukes, its health is decreased by 1.
+   */
 
 
 /**
@@ -316,8 +336,12 @@
  * -----------------------------
  */
 
-
-
+   /**
+   * ExplodingZombie Class Method => explode()
+   * -----------------------------
+   * Zombie explodes, printing out a message and kills off the zombie, setting its health to 0
+   * and isAlive property to false.
+   */
 
 /**
  * Sample run.
@@ -326,8 +350,8 @@
 function runGame() {
   // var player = new Player("Joan", 500, 30, 70);
   // var zombie = new Zombie(40, 50, 20);
-  // var charger = new FastZombie(175, 25, 60);
-  // var tank = new StrongZombie(250, 100, 15);
+  // var charger = new FastZombie(175, 25, 60, 2);
+  // var tank = new StrongZombie(250, 100, 15, 2);
   // var spitter = new RangedZombie(150, 20, 20);
   // var boomer = new ExplodingZombie(50, 15, 10);
 
