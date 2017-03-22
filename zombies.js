@@ -7,6 +7,9 @@
  * @param {string} name     The item's name.
  * @property {string} name
  */
+function Item(name){
+  this.name = name;
+}
 
 
 /**
@@ -24,13 +27,22 @@
  * @param {number} damage   The weapon's damage.
  * @property {number} damage
  */
+ function Weapon (name, damage){
+   this.name = name;
+   this.damage = damage;
+   Item.call(this, name); // Call super class
+ }
 
 
 /**
  * Weapon Extends Item Class
  * -----------------------------
  */
-
+Weapon.prototype = Object.create(Item.prototype, {
+  constructor: {
+    value: Weapon
+  }
+});
 
 
 /**
@@ -48,13 +60,22 @@
  * @param {number} energy     The energy the food provides.
  * @property {number} energy
  */
+function Food (name, energy){
+  this.name = name;
+  this.energy = energy;
+  Item.call(this, name); //Call super class
+}
 
 
 /**
  * Food Extends Item Class
  * -----------------------------
  */
-
+Food.prototype = Object.create(Item.prototype, {
+  constructor: {
+    value: Food
+  }
+});
 
 
 /**
@@ -80,6 +101,24 @@
  */
 
 
+
+function Player(name, health, strength, speed){
+  this.name = name;
+  this.health = health;
+  this.strength = strength;
+  this.speed = speed;
+  this.isAlive = true;
+  this.equipped = false;
+  var pack = [];
+  var maxHealth = health;
+  this.getPack = function (){
+     return pack;
+  };
+  this.getMaxHealth = function (){
+    return maxHealth;
+  };
+}
+
 /**
  * Player Class Method => checkPack()
  * -----------------------------
@@ -91,7 +130,9 @@
  *
  * @name checkPack
  */
-
+Player.prototype.checkPack = function (){
+  console.log(this.getPack().join());
+};
 
 /**
  * Player Class Method => takeItem(item)
@@ -110,7 +151,17 @@
  * @param {Item/Weapon/Food} item   The item to take.
  * @return {boolean} true/false     Whether player was able to store item in pack.
  */
-
+Player.prototype.takeItem = function (item) {
+  var pack = this.getPack();
+    if (pack.length > 2) {
+      console.log("Pack is full");
+      return false;
+    } else{
+      pack.push(item);
+      console.log(Player + "added", item);
+      return true;
+    }
+ };
 
 /**
  * Player Class Method => discardItem(item)
@@ -137,7 +188,17 @@
  * @param {Item/Weapon/Food} item   The item to discard.
  * @return {boolean} true/false     Whether player was able to remove item from pack.
  */
-
+Player.prototype.discardItem = function (item) {
+  var playerPack = this.getPack();
+  if (playerPack.indexOf(item) < 0) {
+      console.log("Nothing disgarded");
+      return false;
+  } else{
+      playerPack.splice(playerPack.indexOf(item), 1);
+      console.log(item + " was discarded");
+      return true;
+  }
+};
 
 /**
  * Player Class Method => equip(itemToEquip)
@@ -158,6 +219,21 @@
  * @name equip
  * @param {Weapon} itemToEquip  The weapon item to equip.
  */
+Player.prototype.equip = function (itemToEquip){
+  var pack = this.getPack();
+  if(!(itemToEquip instanceof Weapon)){
+    return false;
+  }
+  var itemIndex = pack.indexOf(itemToEquip);
+  if(itemIndex > -1){
+    var itemFound = pack.splice(itemIndex, 1)[0];
+    if(this.equipped){
+      pack.push(this.equipped);
+    }
+    this.equipped = itemFound;   
+  }
+};
+
 
 
 /**
@@ -178,7 +254,28 @@
  * @name eat
  * @param {Food} itemToEat  The food item to eat.
  */
-
+Player.prototype.eat = function (itemToEat){
+  var pack = this.getPack();
+  if(!(itemToEat instanceof Food)){
+    return false;
+  }
+  var itemIndex = pack.indexOf(itemToEat);
+  
+  console.log(itemIndex);
+  if(itemIndex > -1){
+    var itemFound = pack.splice(itemIndex, 1)[0];
+    
+    if(this.health <= this.getMaxHealth()){
+      if(itemFound.energy < (this.getMaxHealth() - this.health)) {
+        this.health = this.health + itemFound.energy;
+      } else{
+        this.health = this.getMaxHealth();
+      }
+    }else{
+      return false;
+    }
+  }  
+};
 
 /**
  * Player Class Method => useItem(item)
@@ -192,7 +289,14 @@
  * @name useItem
  * @param {Item/Weapon/Food} item   The item to use.
  */
-
+Player.prototype.useItem = function (item) {
+  if(item instanceof Weapon){
+   this.equip(item);
+  }
+  if(item instanceof Food){
+    this.eat(item);
+  }
+};
 
 /**
  * Player Class Method => equippedWith()
@@ -207,7 +311,16 @@
  * @name equippedWith
  * @return {string/boolean}   Weapon name or false if nothing is equipped.
  */
-
+Player.prototype.equippedWith = function (){
+  // debugger;
+  if (this.equipped) {
+    console.log(this.name, this.equipped.name);
+    return this.equipped.name;
+  } else{
+    console.log("Nothing equipped");
+    return false;
+  }  
+};
 
 /**
  * Class => Zombie(health, strength, speed)
@@ -224,6 +337,13 @@
  * @property {number} speed
  * @property {boolean} isAlive      Default value should be `true`.
  */
+ function Zombie(health, strength, speed){
+  this.health = health;
+  this.strength = strength;
+  this.speed = speed;
+  var maxHealth = health;
+  this.isAlive = true;
+ }
 
 
 /**
@@ -240,13 +360,20 @@
  * @param {number} strength         The zombie's strength.
  * @param {number} speed            The zombie's speed.
  */
+function FastZombie (health, strength, speed){
+  Zombie.call(this, health, strength, speed);
 
+ }
 
 /**
  * FastZombie Extends Zombie Class
  * -----------------------------
  */
-
+FastZombie.prototype = Object.create(Zombie.prototype, {
+  constructor: {
+    value: FastZombie
+  }
+});
 
 
 /**
@@ -263,13 +390,19 @@
  * @param {number} strength         The zombie's strength.
  * @param {number} speed            The zombie's speed.
  */
-
+function StrongZombie(health, strength, speed){
+  Zombie.call(this, health, strength, speed);
+}
 
 /**
  * StrongZombie Extends Zombie Class
  * -----------------------------
  */
-
+StrongZombie.prototype = Object.create(Zombie.prototype, {
+  constructor: {
+    value: StrongZombie
+  }
+});
 
 
 /**
@@ -286,13 +419,19 @@
  * @param {number} strength         The zombie's strength.
  * @param {number} speed            The zombie's speed.
  */
-
+function RangedZombie(health, strength, speed){
+   Zombie.call(this, health, strength, speed);
+}
 
 /**
  * RangedZombie Extends Zombie Class
  * -----------------------------
  */
-
+RangedZombie.prototype = Object.create(Zombie.prototype, {
+  constructor: {
+    value: RangedZombie
+  }
+});
 
 
 /**
@@ -309,13 +448,19 @@
  * @param {number} strength         The zombie's strength.
  * @param {number} speed            The zombie's speed.
  */
-
+function ExplodingZombie(health, strength, speed){
+  Zombie.call(this, health, strength, speed);
+}
 
 /**
  * ExplodingZombie Extends Zombie Class
  * -----------------------------
  */
-
+ExplodingZombie.prototype = Object.create(Zombie.prototype, {
+  constructor: {
+    value: ExplodingZombie
+  }
+});
 
 
 
