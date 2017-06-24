@@ -122,7 +122,7 @@
  */
  checkPack() {
   console.log(this._pack);
- }
+}
 /**
  * Player Class Method => takeItem(item)
  * -----------------------------
@@ -204,16 +204,28 @@
  * @name equip
  * @param {Weapon} itemToEquip  The weapon item to equip.
  */
-equip(itemToEquip) {
-  if(item === weapon) {
-
+ equip(itemToEquip) {
+  //checks if there is an item in pack, and if the item is a weapon
+  if(this._pack.indexOf(itemToEquip) !== -1 && itemToEquip instanceof Weapon) {
+    this._pack.splice(this._pack.indexOf(itemToEquip), 1, this.equipped);
+    this.equipped = itemToEquip;
+    console.log("Your weapons have been swapped!");
+    return true;
+  } else if (this._pack.indexOf(itemToEquip) === -1 || !(itemToEquip instanceof Weapon)){
+    console.log("You do not own this item");
+    return false;
+  }else {
+    this.equipped = itemToEquip;
+    this._pack.splice(this._pack.indexOf(itemToEquip), 1);
+    console.log("You are now armed");
+    return true;
   }
 }
 
 /**
  * Player Class Method => eat(itemToEat)
  * -----------------------------
- * Player eats a food item, restoring their health.
+ * Player eats a food item, restoring their health
  *
  * Player can only eat Food instances.
  * Player can only eat food items from their pack.
@@ -228,9 +240,12 @@ equip(itemToEquip) {
  * @name eat
  * @param {Food} itemToEat  The food item to eat.
  */
-eat(itemToEat) {
+ eat(itemToEat) {
+  if ( this._pack.indexOf(itemToEat) !== -1 && itemToEat instanceof Food) {
+    this._pack.splice(this._pack.indexOf(itemToEat), 1);
 
-}
+  }
+ }
 
 /**
  * Player Class Method => useItem(item)
@@ -244,9 +259,9 @@ eat(itemToEat) {
  * @name useItem
  * @param {Item/Weapon/Food} item   The item to use.
  */
-useitem(item) {
+ useitem(item) {
 
-}
+ }
 
 /**
  * Player Class Method => equippedWith()
@@ -261,9 +276,9 @@ useitem(item) {
  * @name equippedWith
  * @return {string/boolean}   Weapon name or false if nothing is equipped.
  */
-equippedWith() {
+ equippedWith() {
 
-}
+ }
 }
 /**
  * Class => Zombie(health, strength, speed)
@@ -280,8 +295,19 @@ equippedWith() {
  * @property {number} speed
  * @property {boolean} isAlive      Default value should be `true`.
  */
+ class Zombie{
+  constructor(health, strength, speed) {
+    this.health = health;
+    this.strength = strength;
+    this.speed = speed;
+    this._maxHealth = health;
+    this.isAlive = true;
+  }
 
-
+  getMaxHealth() {
+    return this._maxHealth;
+  }
+}
 /**
  * Class => FastZombie(health, strength, speed)
  * -----------------------------
