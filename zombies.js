@@ -243,8 +243,14 @@
  eat(itemToEat) {
   if ( this._pack.indexOf(itemToEat) !== -1 && itemToEat instanceof Food) {
     this._pack.splice(this._pack.indexOf(itemToEat), 1);
+    console.log(itemToEat.energy);
+    this.health += itemToEat.energy;
+    if(this.health > this._maxHealth) {
+      console.log(this._maxHealth);
+      this.health = this._maxHealth;
+    }
 
-  }
+   }
  }
 
 /**
