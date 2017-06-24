@@ -243,10 +243,8 @@
  eat(itemToEat) {
   if ( this._pack.indexOf(itemToEat) !== -1 && itemToEat instanceof Food) {
     this._pack.splice(this._pack.indexOf(itemToEat), 1);
-    console.log(itemToEat.energy);
     this.health += itemToEat.energy;
     if(this.health > this._maxHealth) {
-      console.log(this._maxHealth);
       this.health = this._maxHealth;
     }
 
@@ -265,9 +263,13 @@
  * @name useItem
  * @param {Item/Weapon/Food} item   The item to use.
  */
- useitem(item) {
-
+ useItem(item) {
+  if ( this._pack.indexOf(item) !== -1 && item instanceof Weapon){
+    this.equip(item);
+ } else if ( this._pack.indexOf(item) !== -1 && item instanceof Food) {
+    this.eat(item);
  }
+}
 
 /**
  * Player Class Method => equippedWith()
