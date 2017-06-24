@@ -120,7 +120,9 @@
  *
  * @name checkPack
  */
-
+ checkPack() {
+  console.log(this._pack);
+ }
 /**
  * Player Class Method => takeItem(item)
  * -----------------------------
@@ -139,11 +141,11 @@
  * @return {boolean} true/false     Whether player was able to store item in pack.
  */
  takeItem(item) {
-    if(this._pack.length < 3) {
-      this._pack.push(item);
-      console.log(this.name + "" + item.name);
-   }   return true;
-    }
+  if(this._pack.length < 3) {
+    this._pack.push(item);
+    console.log(this.name + " " + item.name);
+  }   return true;
+}
 
 
 
@@ -172,7 +174,16 @@
  * @param {Item/Weapon/Food} item   The item to discard.
  * @return {boolean} true/false     Whether player was able to remove item from pack.
  */
-
+ discardItem(item){
+  if(this._pack.indexOf(item)){
+    this._pack.splice(item.name, 1);
+    console.log(this.name + " " + item.name + " " + "your item has been discarded");
+    return true;
+  }else {
+    console.log("Nothing was discarded");
+    return false;
+  }
+}
 }
 /**
  * Player Class Method => equip(itemToEquip)
