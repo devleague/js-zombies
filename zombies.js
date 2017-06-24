@@ -40,7 +40,6 @@
     this.damage = damage;
   }
 }
-let ak47 = new Weapon ("Ak47", 10);
 
 /**
  * Class => Food(name, energy)
@@ -67,8 +66,6 @@ let ak47 = new Weapon ("Ak47", 10);
     this.energy = energy;
   }
 }
-
-
 /**
  * Class => Player(name, health, strength, speed)
  * -----------------------------
@@ -91,7 +88,7 @@ let ak47 = new Weapon ("Ak47", 10);
  * @property {method} getMaxHealth         Returns private variable `maxHealth`.
  */
  class Player{
-  constructor(name, health, strength, speed){
+  constructor(name, health, strength, speed) {
     this.name = name;
     this.health = health;
     this.strength = strength;
@@ -101,13 +98,16 @@ let ak47 = new Weapon ("Ak47", 10);
     this.isAlive = true;
     this.equipped = false;
   }
+
   getPack() {
     return this._pack;
   }
+
   getMaxHealth() {
     return this._maxHealth;
   }
-}
+
+
 
 /**
  * Player Class Method => checkPack()
@@ -138,6 +138,13 @@ let ak47 = new Weapon ("Ak47", 10);
  * @param {Item/Weapon/Food} item   The item to take.
  * @return {boolean} true/false     Whether player was able to store item in pack.
  */
+ takeItem(item) {
+    if(this._pack.length < 3) {
+      this._pack.push(item);
+      console.log(this.name + "" + item.name);
+   }   return true;
+    }
+
 
 
 /**
@@ -166,7 +173,7 @@ let ak47 = new Weapon ("Ak47", 10);
  * @return {boolean} true/false     Whether player was able to remove item from pack.
  */
 
-
+}
 /**
  * Player Class Method => equip(itemToEquip)
  * -----------------------------
