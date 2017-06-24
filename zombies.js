@@ -105,7 +105,7 @@ let ak47 = new Weapon ("Ak47", 10);
     return this._pack;
   }
   getMaxHealth() {
-
+    return this._maxHealth;
   }
 }
 
