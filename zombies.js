@@ -8,9 +8,9 @@
  * @param {string} name     The item's name.
  * @property {string} name
  */
-class Item {
-  constructor(HealthPack){
-    this.name = HealthPack;
+ class Item {
+  constructor(name){
+    this.name = name;
   }
 
 }
@@ -30,14 +30,17 @@ class Item {
  * @param {number} damage   The weapon's damage.
  * @property {number} damage
  */
-
-
 /**
  * Weapon Extends Item Class
  * -----------------------------
  */
-
-
+ class Weapon extends Item {
+  constructor(name, damage){
+    super(name);
+    this.damage = damage;
+  }
+}
+let ak47 = new Weapon ("Ak47", 10);
 
 /**
  * Class => Food(name, energy)
@@ -54,13 +57,16 @@ class Item {
  * @param {number} energy     The energy the food provides.
  * @property {number} energy
  */
-
-
 /**
  * Food Extends Item Class
  * -----------------------------
  */
-
+ class Food extends Item{
+  constructor(name, energy){
+    super(name);
+    this.energy = energy;
+  }
+}
 
 
 /**
@@ -329,7 +335,7 @@ class Item {
  * Sample run.
  * Feel free to edit this and check your game logic.
  */
-function runGame() {
+ function runGame() {
   // var player = new Player("Joan", 500, 30, 70);
   // var zombie = new Zombie(40, 50, 20);
   // var charger = new FastZombie(175, 25, 60);
