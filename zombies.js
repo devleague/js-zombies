@@ -177,6 +177,37 @@ class Food extends Item {
  * @param {Weapon} itemToEquip  The weapon item to equip.
  */
 
+ /**
+ * Player Class Method => eat(itemToEat)
+ * -----------------------------
+ * Player can only eat Food instances.
+ * Player can only eat food items from their pack.
+ * Remove itemToEat from the pack.
+ * Increase the player's health by the food's energy amount, but do not
+ * exceed the player's max health.  If exceeded, simply set player's health
+ * to max health instead.
+
+ * To access the player's max health, be sure to use Player's getMaxHealth method.
+ * You should be able to invoke this function on a Player instance.
+ *
+ * @name eat
+ * @param {Food} itemToEat  The food item to eat.
+ */
+
+
+/**
+ * Player Class Method => useItem(item)
+ * -----------------------------
+ * Player uses an item from the pack.
+ *
+ * If the item is a weapon, the player should equip the item.
+ * If the item is food, the player should eat the item.
+ * You should be able to invoke this function on a Player instance.
+ *
+ * @name useItem
+ * @param {Item/Weapon/Food} item   The item to use.
+ */
+
 
 class Player {
   constructor (name, health, strength, speed){
@@ -187,7 +218,7 @@ class Player {
     this.isAlive = true;
     this.equipped = false;
     this._pack = [];
-    this._maxHealth = health;
+    this._maxHealth = 100;
   }
 
   getPack(){
@@ -256,43 +287,37 @@ class Player {
   }
 
   eat (itemToEat){
-    
+    if (itemToEat instanceof Food){
+      if (this._pack.indexOf(itemToEat) > -1){
+        this._pack.splice(this._pack.indexOf(itemToEat), 1);
+        if (this.health + itemToEat.energy > this._maxHealth){
+          this.health = this._maxHealth;
+        } else {
+          this.health += itemToEat.energy;
+        }
+      } else {
+        console.log('Cant eat that - you dont have that.');
+        return false;
+      }
+    } else {
+      console.log('That is not food, fool. Take that outta yo mouth.');
+      return false;
+    }
   }
+
+  useItem(item){
+    if (item instanceof Food){
+      this.eat(item);
+    } else if (item instanceof Weapon) {
+      this.equip(item); 
+    } else {
+      throw new Error ('Well, something\'s off.');
+    }
+  }
+
+
 }
 
-
-/**
- * Player Class Method => eat(itemToEat)
- * -----------------------------
- * Player eats a food item, restoring their health.
- *
- * Player can only eat Food instances.
- * Player can only eat food items from their pack.
- *
- * Remove itemToEat from the pack.
- * Increase the player's health by the food's energy amount, but do not
- *   exceed the player's max health.  If exceeded, simply set player's health
- *   to max health instead.
- * To access the player's max health, be sure to use Player's getMaxHealth method.
- * You should be able to invoke this function on a Player instance.
- *
- * @name eat
- * @param {Food} itemToEat  The food item to eat.
- */
-
-
-/**
- * Player Class Method => useItem(item)
- * -----------------------------
- * Player uses an item from the pack.
- *
- * If the item is a weapon, the player should equip the item.
- * If the item is food, the player should eat the item.
- * You should be able to invoke this function on a Player instance.
- *
- * @name useItem
- * @param {Item/Weapon/Food} item   The item to use.
- */
 
 
 /**
