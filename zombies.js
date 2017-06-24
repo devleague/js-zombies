@@ -1,3 +1,5 @@
+/*jshint esversion: 6 */
+
 /**
  * Class => Item(name)
  * -----------------------------
@@ -7,6 +9,12 @@
  * @param {string} name     The item's name.
  * @property {string} name
  */
+class Item {
+  constructor(name){
+    this.name = name;
+
+  }  
+}
 
 
 /**
@@ -30,7 +38,12 @@
  * Weapon Extends Item Class
  * -----------------------------
  */
-
+class Weapon extends Item{
+  constructor(name, damage){
+    super(name);
+    this.damage = damage;
+  }
+}
 
 
 /**
@@ -54,7 +67,13 @@
  * Food Extends Item Class
  * -----------------------------
  */
+class Food extends Item{
+  constructor(name, energy){
+    super(name);
+    this.energy = energy;
 
+  }
+}
 
 
 /**
@@ -78,8 +97,24 @@
  * @property {method} getPack              Returns private variable `pack`.
  * @property {method} getMaxHealth         Returns private variable `maxHealth`.
  */
+class Player{
+  constructor(name, health, strength, speed){
+    this.name = name;
+    this.health = health; 
+    this.strength = strength;
+    this.speed = speed;
+    this._pack = [];
+    this._maxHealth = health;
+    this.isAlive = true;
+    this.equipped = false;
+  }
+    getPack(){
+      return this._pack;
+    }
 
-
+    getMaxHealth(){
+      return this._maxHealth;
+    }
 /**
  * Player Class Method => checkPack()
  * -----------------------------
@@ -91,8 +126,15 @@
  *
  * @name checkPack
  */
+    checkPack(){
+      console.log(this._pack);
 
+    }
 
+ 
+
+    
+ 
 /**
  * Player Class Method => takeItem(item)
  * -----------------------------
@@ -110,6 +152,14 @@
  * @param {Item/Weapon/Food} item   The item to take.
  * @return {boolean} true/false     Whether player was able to store item in pack.
  */
+ takeItem(item){
+  if( this._pack.length < 3){
+    this._pack.push(item);
+    console.log(this.name + " " + item.name );
+    return true;
+  } 
+ }
+ 
 
 
 /**
@@ -137,6 +187,17 @@
  * @param {Item/Weapon/Food} item   The item to discard.
  * @return {boolean} true/false     Whether player was able to remove item from pack.
  */
+ discardItem(item){
+  var z = this._pack.indexOf(item);
+  if(this._pack.indexOf(item)> -1){
+   this._pack.splice(z, 1);
+   console.log(this.name + " " + item.name + " was discarded.");
+   return true;
+  } else{
+    return false;
+  }
+ }
+
 
 
 /**
@@ -158,6 +219,31 @@
  * @name equip
  * @param {Weapon} itemToEquip  The weapon item to equip.
  */
+ equip(itemToEquip){
+  //ensures this is a weapon.
+  if(itemToEquip instanceof Weapon === false){
+    return;
+  }
+  //If the player is equipped we need to swap.
+  if(this.equipped !== undefined){
+    
+
+    //if weapon is in pack equip on player and replace weapon on player currently.
+    if(this._pack.indexOf(itemToEquip) > -1){
+     this._pack.push(this.equipped);
+    this.equipped = itemToEquip;
+    let p = this._pack.indexOf(itemToEquip);
+        this._pack.splice(p, 1);
+    }
+  } else{
+    //equip item and rempove from pack
+    if(this._pack.indexOf(itemToEquip) > -1){
+      this.equipped = itemToEquip;
+      let g = this._pack.indexOf(itemToEquip);
+        this._pack.splice(g, 1);
+    }
+  }
+ }
 
 
 /**
@@ -178,6 +264,25 @@
  * @name eat
  * @param {Food} itemToEat  The food item to eat.
  */
+ eat(itemToEat){
+  if(!(itemToEat instanceof Food)){
+    return;
+  }
+  //Only eat food items from their pack.
+  if (this._pack.indexOf(itemToEat) === -1){
+    return;
+  }
+    //remove itemToEat from pack.
+    let y =this._pack.indexOf(itemToEat);
+    this._pack.splice(y, 1);
+    //Increase player health by food amount.
+    this.health += itemToEat.energy;
+    if(this.health > this.getMaxHealth()){
+      this.health = this.getMaxHealth();
+    }
+ }
+
+
 
 
 /**
@@ -192,6 +297,14 @@
  * @name useItem
  * @param {Item/Weapon/Food} item   The item to use.
  */
+useItem(item){
+  if(item instanceof Weapon){
+    this.equip(item);
+  }
+  if(item instanceof Food){
+    this.eat(item);
+  }
+}
 
 
 /**
@@ -207,6 +320,17 @@
  * @name equippedWith
  * @return {string/boolean}   Weapon name or false if nothing is equipped.
  */
+ equippedWith(){
+  if(!this.equipped){
+    //console.log("Player isn't equipped!");
+    return false;
+  } else{
+    //console.log(this.equipped.name);
+    //console.log(this.name + " is equipped with " + this.equipped.name);
+    return  this.equipped.name;
+  }
+}
+ }
 
 
 /**
@@ -224,7 +348,15 @@
  * @property {number} speed
  * @property {boolean} isAlive      Default value should be `true`.
  */
-
+class Zombie{
+  constructor(health, strength, speed){
+    this._maxHealth = health;
+    this.health = health;
+    this.strength = strength; 
+    this.speed = speed;
+    this.isAlive = true;
+  }
+}
 
 /**
  * Class => FastZombie(health, strength, speed)
@@ -240,13 +372,13 @@
  * @param {number} strength         The zombie's strength.
  * @param {number} speed            The zombie's speed.
  */
+class FastZombie extends Zombie{
+  constructor(health, strength, speed){
+    super(health, strength, speed);
 
+  }
 
-/**
- * FastZombie Extends Zombie Class
- * -----------------------------
- */
-
+}
 
 
 /**
@@ -264,13 +396,11 @@
  * @param {number} speed            The zombie's speed.
  */
 
-
-/**
- * StrongZombie Extends Zombie Class
- * -----------------------------
- */
-
-
+class StrongZombie extends Zombie{
+  constructor(health, strength, speed){
+    super(health, strength, speed);
+  }
+}
 
 /**
  * Class => RangedZombie(health, strength, speed)
@@ -287,13 +417,11 @@
  * @param {number} speed            The zombie's speed.
  */
 
-
-/**
- * RangedZombie Extends Zombie Class
- * -----------------------------
- */
-
-
+class RangedZombie extends Zombie{
+  constructor(health, strength, speed){
+    super(health, strength, speed);
+  }
+}
 
 /**
  * Class => ExplodingZombie(health, strength, speed)
@@ -311,11 +439,11 @@
  */
 
 
-/**
- * ExplodingZombie Extends Zombie Class
- * -----------------------------
- */
-
+class ExplodingZombie extends Zombie{
+  constructor(health, strength, speed){
+    super(health, strength, speed);
+  }
+}
 
 
 
@@ -359,3 +487,5 @@ function runGame() {
   // console.log("After health: " + player.health);
   // player.checkPack();
 }
+
+runGame();
