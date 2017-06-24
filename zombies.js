@@ -1,3 +1,5 @@
+/*jshint esversion: 6 */
+
 /**
  * Class => Item(name)
  * -----------------------------
@@ -7,6 +9,12 @@
  * @param {string} name     The item's name.
  * @property {string} name
  */
+
+class Item {
+  constructor (name){
+    this.name = name;
+  }
+}
 
 
 /**
@@ -24,6 +32,14 @@
  * @param {number} damage   The weapon's damage.
  * @property {number} damage
  */
+
+class Weapon extends Item {
+  constructor (name, damage){
+    super(name);
+    this.damage = damage;
+  }
+}
+
 
 
 /**
@@ -55,7 +71,12 @@
  * -----------------------------
  */
 
-
+class Food extends Item {
+  constructor (name, energy){
+    super(name);
+    this.energy = energy;
+  }
+}
 
 /**
  * Class => Player(name, health, strength, speed)
@@ -79,8 +100,7 @@
  * @property {method} getMaxHealth         Returns private variable `maxHealth`.
  */
 
-
-/**
+ /**
  * Player Class Method => checkPack()
  * -----------------------------
  * Player checks the contents of their pack.
@@ -92,13 +112,12 @@
  * @name checkPack
  */
 
-
 /**
  * Player Class Method => takeItem(item)
  * -----------------------------
  * Player takes an item from the world and places it into their pack.
  *
- * Player's pack can only hold a maximum of 3 items, so if they try to add more
+ * Player's pack can only hold a maximum of 3 items, so if they try to add more;
  *   than that to the pack, return false.
  * Before returning true or false, print a message containing the player's
  *   name and item's name if successful.  Otherwise, print a message saying
@@ -110,7 +129,6 @@
  * @param {Item/Weapon/Food} item   The item to take.
  * @return {boolean} true/false     Whether player was able to store item in pack.
  */
-
 
 /**
  * Player Class Method => discardItem(item)
@@ -138,8 +156,7 @@
  * @return {boolean} true/false     Whether player was able to remove item from pack.
  */
 
-
-/**
+ /**
  * Player Class Method => equip(itemToEquip)
  * -----------------------------
  * Player equips a weapon item.
@@ -148,7 +165,8 @@
  * Player can only equip weapon items from their pack.
  *
  * If the player already has a weapon equipped (the equipped property
- *   is set to an Item), find the itemToEquip in the pack and replace
+ *   is set to an Item),
+  find the itemToEquip in the pack and replace
  *   it with the currently equipped item.  Then set the equipped property
  *   to the itemToEquip.
  * However, if the player doesn't already have a weapon equipped, simply
@@ -158,6 +176,89 @@
  * @name equip
  * @param {Weapon} itemToEquip  The weapon item to equip.
  */
+
+
+class Player {
+  constructor (name, health, strength, speed){
+    this.name = name;
+    this.health = health;
+    this.strength = strength;
+    this.speed = speed;
+    this.isAlive = true;
+    this.equipped = false;
+    this._pack = [];
+    this._maxHealth = health;
+  }
+
+  getPack(){
+    console.log(this._pack.join(", "));
+    return this._pack;
+  }
+
+  checkPack(){
+    console.log(this._pack.join(", "));
+    return this._pack;
+  }
+
+  getMaxHealth(){
+    return this._maxHealth;
+  }
+
+  takeItem (item){
+    if (item instanceof Item === true) {
+      if (this._pack.length < 3){
+        this._pack.push(item);
+        console.log(this.name + ' added ' + item.name);
+        return true;
+      } else {
+        console.log('Pack is full and item cannot be added to pack.');
+        return false;
+      }
+    } else {
+      throw new Error ('That is not an item, fool.');
+    }
+  }
+
+  discardItem (item){
+    if (item instanceof Item === true){
+      let itemIndex = this._pack.indexOf(item);
+      if (itemIndex > -1) {
+        this._pack.splice(itemIndex, 1);
+        console.log(this.name + ' discarded ' + item.name);
+        return true;
+      } else {
+        console.log(item.name + ' could not be discarded - it wasnt in the pack.');
+        return false;
+      }
+    } else {
+      throw new Error ('That is not an item, fool.');
+    }
+  }
+
+  equip(itemToEquip){
+    if (itemToEquip instanceof Weapon){
+      if (this._pack.indexOf(itemToEquip) > -1) {
+        this._pack.splice(this._pack.indexOf(itemToEquip), 1);
+        console.log(this.name + ' put ' + this.equipped + ' back in the pack, and equipped him/herself with ' + itemToEquip);
+        if (this.equipped instanceof Item){
+          this.takeItem(this.equipped);
+        }
+        this.equipped = itemToEquip; 
+        return true;
+      } else {
+        console.log('Could not equip ' + itemToEquip.name + ' - it wasnt in the pack.');
+        return false;
+      }
+    } else {
+      console.log('That is not a weapon, fool.');
+      return false;
+    }
+  }
+
+  eat (itemToEat){
+    
+  }
+}
 
 
 /**
