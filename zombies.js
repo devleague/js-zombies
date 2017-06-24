@@ -175,16 +175,16 @@
  * @return {boolean} true/false     Whether player was able to remove item from pack.
  */
  discardItem(item){
-  if(this._pack.indexOf(item)){
-    this._pack.splice(item.name, 1);
+  if(this._pack.indexOf(item) !== -1){
+    this._pack.splice(this._pack.indexOf(item), 1);
     console.log(this.name + " " + item.name + " " + "your item has been discarded");
     return true;
-  }else {
+  } else{
     console.log("Nothing was discarded");
     return false;
   }
 }
-}
+
 /**
  * Player Class Method => equip(itemToEquip)
  * -----------------------------
@@ -204,7 +204,11 @@
  * @name equip
  * @param {Weapon} itemToEquip  The weapon item to equip.
  */
+equip(itemToEquip) {
+  if(item === weapon) {
 
+  }
+}
 
 /**
  * Player Class Method => eat(itemToEat)
@@ -224,7 +228,9 @@
  * @name eat
  * @param {Food} itemToEat  The food item to eat.
  */
+eat(itemToEat) {
 
+}
 
 /**
  * Player Class Method => useItem(item)
@@ -238,7 +244,9 @@
  * @name useItem
  * @param {Item/Weapon/Food} item   The item to use.
  */
+useitem(item) {
 
+}
 
 /**
  * Player Class Method => equippedWith()
@@ -253,8 +261,10 @@
  * @name equippedWith
  * @return {string/boolean}   Weapon name or false if nothing is equipped.
  */
+equippedWith() {
 
-
+}
+}
 /**
  * Class => Zombie(health, strength, speed)
  * -----------------------------
