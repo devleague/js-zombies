@@ -235,12 +235,20 @@ class Player {
   }
 
   getPack(){
-    console.log(this._pack.join(", "));
+    var packArr = [];
+    for (var i = 0; i < this._pack.length; i++){
+      packArr.push(this._pack[i].name);
+    }
+    console.log(this.name + ' checked the pack. It had\: a ' + packArr.join(", a "));
     return this._pack;
   }
 
   checkPack(){
-    console.log(this._pack.join(", "));
+    var packArr = [];
+    for (var i = 0; i < this._pack.length; i++){
+      packArr.push(this._pack[i].name);
+    }
+    console.log(this.name + ' checked the pack. It had\: a ' + packArr.join(", a "));
     return this._pack;
   }
 
@@ -252,10 +260,10 @@ class Player {
     if (item instanceof Item === true) {
       if (this._pack.length < 3){
         this._pack.push(item);
-        console.log(this.name + ' added ' + item.name);
+        console.log(this.name + ' added a ' + item.name + ' to the pack.');
         return true;
       } else {
-        console.log('Pack is full and item cannot be added to pack.');
+        console.log(this.name + ' tried to add a ' + item.name + ', but the pack was already full.');
         return false;
       }
     } else {
@@ -268,10 +276,10 @@ class Player {
       let itemIndex = this._pack.indexOf(item);
       if (itemIndex > -1) {
         this._pack.splice(itemIndex, 1);
-        console.log(this.name + ' discarded ' + item.name);
+        console.log(this.name + ' discarded a ' + item.name);
         return true;
       } else {
-        console.log(item.name + ' could not be discarded - it wasnt in the pack.');
+        console.log(this.name + ' tried to discard a ' + item.name + ', but it wasn\'t in the pack.');
         return false;
       }
     } else {
@@ -283,33 +291,38 @@ class Player {
     if (itemToEquip instanceof Weapon){
       if (this._pack.indexOf(itemToEquip) > -1) {
         this._pack.splice(this._pack.indexOf(itemToEquip), 1);
-        console.log(this.name + ' put ' + this.equipped + ' back in the pack, and equipped him/herself with ' + itemToEquip);
+        console.log(this.name + ' took out a ' + itemToEquip.name + ' from the pack.');
         if (this.equipped instanceof Item){
+          console.log(this.name + ' put the ' + this.equipped.name + ' back in the bag.');
           this.takeItem(this.equipped);
         }
         this.equipped = itemToEquip; 
         return true;
       } else {
-        console.log('Could not equip ' + itemToEquip.name + ' - it wasnt in the pack.');
+        console.log(this.name + ' tried to take out ' + itemToEquip.name + ' but couldn\'t - it was not in the bag.');
         return false;
       }
     } else {
-      console.log('That is not a weapon, fool.');
+      console.log(this.name + ' tried to use ' + itemToEquip.name + ' but that is not a weapon, fool.');
       return false;
     }
   }
 
   eat (itemToEat){
     if (itemToEat instanceof Food){
+      console.log(this.name + ' tried to eat a ' + itemToEat.name + '.');
       if (this._pack.indexOf(itemToEat) > -1){
+        console.log('Checked the pack and found one. And eated it!!!');
         this._pack.splice(this._pack.indexOf(itemToEat), 1);
         if (this.health + itemToEat.energy > this._maxHealth){
           this.health = this._maxHealth;
+          console.log(this.name + ' went up to maximum health.');
         } else {
           this.health += itemToEat.energy;
+          console.log(this.name + ' went up to ' + this.health + ' health.');
         }
       } else {
-        console.log('Cant eat that - you dont have that.');
+        console.log('But ' + this.name + 'didn\'t have a ' + itemToEat.name);
         return false;
       }
     } else {
@@ -330,10 +343,10 @@ class Player {
 
   equippedWith(){
     if (this.equipped instanceof Item){
-      console.log(this.name + this.equipped.name);
+      console.log(this.name + ' is now holding a ' + this.equipped.name);
       return this.equipped.name;
     } else {
-      console.log(this.name + ' not currently equipped with anything.');
+      console.log(this.name + '\'s hands are free.');
       return false;
     }
   }
@@ -499,6 +512,7 @@ function runGame() {
   player.takeItem(shovel);
   player.takeItem(sandwich);
   player.takeItem(chainsaw);
+  player.takeItem(sandwich);
   player.discardItem(new Weapon("scythe", 21));
   player.discardItem(shovel);
   player.checkPack();
