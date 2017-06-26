@@ -237,17 +237,6 @@ Food.prototype  = Object.create(Item.prototype);
  * @return {string/boolean}   Weapon name or false if nothing is equipped.
  */
 
-// class Player {
-//   constructor (name, health, strength, speed){
-//     this.name = name;
-//     this.health = health;
-//     this.strength = strength;
-//     this.speed = speed;
-//     this.isAlive = true;
-//     this.equipped = false;
-//     this._pack = [];
-//     this._maxHealth = health;
-//   }
 
 function Player (name, health, strength, speed){
   this.name = name;
