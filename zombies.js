@@ -73,8 +73,6 @@ class Food extends Item{
  * -----------------------------
  */
 
-
-
 /**
  * Class => Player(name, health, strength, speed)
  * -----------------------------
@@ -115,7 +113,31 @@ class Player{
   getMaxHealth(){
     return this._maxHealth;
   }
+
+
+
+  takeItem(item){
+    if (this._pack.length < 3){
+      this._pack.push(item);
+      console.log(this.name + " has successfully added " + item.name + " into their bag.");
+      return true;
+    } else {
+      console.log(this.name + " \ 's bag is full. " + item.name + " was not added.");
+      return false;
+    }
+  }
+
+  discardItem(){
+
+  }
+
+
+  checkPack(){
+      console.log(this.getPack());
+    }
 }
+
+
 
 /**
  * Player Class Method => checkPack()
@@ -128,7 +150,7 @@ class Player{
  *
  * @name checkPack
  */
-var checkPack = Player.getPack();
+
 
 /**
  * Player Class Method => takeItem(item)
@@ -147,12 +169,7 @@ var checkPack = Player.getPack();
  * @param {Item/Weapon/Food} item   The item to take.
  * @return {boolean} true/false     Whether player was able to store item in pack.
  */
-// let takeItem = this.item;
-// function takeItem(){
-//   if (item instanceOf Item) {
-//     return true;
-//   }
-// }
+
 
 /**
  * Player Class Method => discardItem(item)
