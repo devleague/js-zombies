@@ -1,3 +1,5 @@
+//jshint esversion:6
+
 /**
  * Class => Item(name)
  * -----------------------------
@@ -8,6 +10,12 @@
  * @property {string} name
  */
 
+class Item {
+    constructor(name){
+      this.name = name;
+      console.log(name);
+    }
+}
 
 /**
  * Class => Weapon(name, damage)
@@ -24,7 +32,12 @@
  * @param {number} damage   The weapon's damage.
  * @property {number} damage
  */
-
+class Weapon extends Item {
+  constructor(name, damage){
+   super(name, damage);
+   this.damage = damage;
+    }
+}
 
 /**
  * Weapon Extends Item Class
@@ -48,7 +61,12 @@
  * @param {number} energy     The energy the food provides.
  * @property {number} energy
  */
-
+class Food extends Item{
+  constructor(name, energy){
+    super(name, energy);
+    this.energy = energy;
+  }
+}
 
 /**
  * Food Extends Item Class
@@ -78,7 +96,26 @@
  * @property {method} getPack              Returns private variable `pack`.
  * @property {method} getMaxHealth         Returns private variable `maxHealth`.
  */
+class Player{
 
+  constructor(name, health, strength, speed){
+    this._pack = [];
+    this._maxHealth = health;
+    this.name = name;
+    this.health = health;
+    this.strength = strength;
+    this.speed = speed;
+    this.isAlive = true;
+    this.equipped = false;
+
+}
+  getPack(){
+    return this._pack;
+  }
+  getMaxHealth(){
+    return this._maxHealth;
+  }
+}
 
 /**
  * Player Class Method => checkPack()
@@ -91,7 +128,7 @@
  *
  * @name checkPack
  */
-
+var checkPack = Player.getPack();
 
 /**
  * Player Class Method => takeItem(item)
@@ -110,7 +147,12 @@
  * @param {Item/Weapon/Food} item   The item to take.
  * @return {boolean} true/false     Whether player was able to store item in pack.
  */
-
+// let takeItem = this.item;
+// function takeItem(){
+//   if (item instanceOf Item) {
+//     return true;
+//   }
+// }
 
 /**
  * Player Class Method => discardItem(item)
