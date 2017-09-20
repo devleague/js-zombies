@@ -10,12 +10,6 @@
  * @property {string} name
  */
 
-class Item {
-    constructor(name){
-      this.name = name;
-      console.log(name);
-    }
-}
 
 /**
  * Class => Weapon(name, damage)
@@ -32,12 +26,7 @@ class Item {
  * @param {number} damage   The weapon's damage.
  * @property {number} damage
  */
-class Weapon extends Item {
-  constructor(name, damage){
-   super(name, damage);
-   this.damage = damage;
-    }
-}
+
 
 /**
  * Weapon Extends Item Class
@@ -61,14 +50,7 @@ class Weapon extends Item {
  * @param {number} energy     The energy the food provides.
  * @property {number} energy
  */
-class Food extends Item{
-  constructor(name, energy){
-    super(name, energy);
-    this.energy = energy;
-  }
-}
-
-/**
+ /**
  * Food Extends Item Class
  * -----------------------------
  */
@@ -94,6 +76,30 @@ class Food extends Item{
  * @property {method} getPack              Returns private variable `pack`.
  * @property {method} getMaxHealth         Returns private variable `maxHealth`.
  */
+
+
+ class Item {
+    constructor(name){
+      this.name = name;
+      console.log(name);
+    }
+}
+
+class Weapon extends Item {
+  constructor(name, damage){
+   super(name, damage);
+   this.damage = damage;
+    }
+}
+
+class Food extends Item{
+  constructor(name, energy){
+    super(name, energy);
+    this.energy = energy;
+  }
+}
+
+
 class Player{
 
   constructor(name, health, strength, speed){
@@ -127,15 +133,49 @@ class Player{
     }
   }
 
-  discardItem(){
+  discardItem(item){
+    let itemLocation = this._pack.indexOf(item);
+
+    if(itemLocation > -1){
+      this._pack.splice(itemLocation, 1);
+      console.log(item.name + " was removed from bag.");
+      return true;
+    } else {
+      console.log(item.name + " not found");
+      return false;
+    }
 
   }
-
 
   checkPack(){
       console.log(this.getPack());
     }
+
 }
+
+ //  Use Array's indexOf method to check if the pack contains the item.
+ // * If an item is not found in the pack, indexOf returns -1.
+ // * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
+ // *
+ // * If the item is in the pack, remove it from the pack using Array's splice method.
+ // * Print the player and item names and a message saying the item was discarded.
+ // * Return true for the successful discard.
+ // * Note: The splice method can also be used for array element replacement.
+ // * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
+ // *
+ // * If the item is not in the pack, return a message with the item name saying
+ // *   nothing was discarded since the item could not be found.
+ // * Return false in this case.
+ // *
+ // * You should be able to invoke this function on a Player instance.
+ // *
+ // * @name discardItem
+ // * @param {Item/Weapon/Food} item   The item to discard.
+ // * @return {boolean} true/false     Whether player was able to remove item from pack.
+
+
+
+
 
 
 
