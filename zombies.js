@@ -210,6 +210,102 @@
  */
 
 
+/**
+ * Player Class Method => equippedWith()
+ * -----------------------------
+ * Player checks their equipment.
+ *
+ * Prints the player's name and equipped weapon's name.
+ * If nothing is equipped, prints a message saying so.
+ * Also returns the equipped weapon's name or false if nothing is equipped.
+ * You should be able to invoke this function on a Player instance.
+ *
+ * @name equippedWith
+ * @return {string/boolean}   Weapon name or false if nothing is equipped.
+ */
+
+
+/**
+ * Class => Zombie(health, strength, speed)
+ * -----------------------------
+ * Creates a normal zombie.
+ *
+ * @name Zombie
+ * @param {number} health           The zombie's health.
+ * @param {number} strength         The zombie's strength.
+ * @param {number} speed            The zombie's speed.
+ * @private {number} maxHealth      Default value should be set to `health`.
+ * @property {number} health
+ * @property {number} strength
+ * @property {number} speed
+ * @property {boolean} isAlive      Default value should be `true`.
+ */
+
+
+/**
+ * Class => FastZombie(health, strength, speed)
+ * -----------------------------
+ * Creates a fast zombie.
+ *
+ * The FastZombie class constructor will call
+ *   the super class (Zombie) constructor
+ *   while passing in the 3 Zombie constructor params
+ *
+ * @name FastZombie
+ * @param {number} health           The zombie's health.
+ * @param {number} strength         The zombie's strength.
+ * @param {number} speed            The zombie's speed.
+ */
+
+
+/**
+ * FastZombie Extends Zombie Class
+ * -----------------------------
+ */
+ /**
+ * Class => StrongZombie(health, strength, speed)
+ * -----------------------------
+ * Creates a strong zombie.
+ *
+ * The StrongZombie class constructor will call
+ *   the super class (Zombie) constructor
+ *   while passing in the 3 Zombie constructor params
+ *
+ * @name StrongZombie
+ * @param {number} health           The zombie's health.
+ * @param {number} strength         The zombie's strength.
+ * @param {number} speed            The zombie's speed.
+ */
+
+
+/**
+ * StrongZombie Extends Zombie Class
+ * -----------------------------
+ */
+
+
+
+
+/**
+ * Class => RangedZombie(health, strength, speed)
+ * -----------------------------
+ * Creates a ranged zombie.
+ *
+ * The RangedZombie class constructor will call
+ *   the super class (Zombie) constructor
+ *   while passing in the 3 Zombie constructor params
+ *
+ * @name RangedZombie
+ * @param {number} health           The zombie's health.
+ * @param {number} strength         The zombie's strength.
+ * @param {number} speed            The zombie's speed.
+ */
+
+
+/**
+ * RangedZombie Extends Zombie Class
+ * -----------------------------
+ */
 
 
  class Item {
@@ -329,107 +425,42 @@ class Player{
   }
 }
 
+class Zombie{
+  constructor(health, strength, speed){
+    this.health = health;
+    this.strength = strength;
+    this.speed = speed;
+    this._maxHealth = health;
+    this.health = health;
+    this.strength = strength;
+    this.speed = speed;
+    this.isAlive = true;
+  }
+}
+
+class FastZombie extends Zombie{
+  constructor(health, strength, speed){
+    super(health, strength, speed);
+  }
+
+}
+
+
+class StrongZombie extends Zombie{
+  constructor(health, strength, speed){
+    super(health, strength, speed);
+  }
+
+}
+
+class RangedZombie extends Zombie{
+  constructor(health, strength, speed){
+    super(health, strength, speed);
+  }
+}
 
 
 
-/**
- * Player Class Method => equippedWith()
- * -----------------------------
- * Player checks their equipment.
- *
- * Prints the player's name and equipped weapon's name.
- * If nothing is equipped, prints a message saying so.
- * Also returns the equipped weapon's name or false if nothing is equipped.
- * You should be able to invoke this function on a Player instance.
- *
- * @name equippedWith
- * @return {string/boolean}   Weapon name or false if nothing is equipped.
- */
-
-
-/**
- * Class => Zombie(health, strength, speed)
- * -----------------------------
- * Creates a normal zombie.
- *
- * @name Zombie
- * @param {number} health           The zombie's health.
- * @param {number} strength         The zombie's strength.
- * @param {number} speed            The zombie's speed.
- * @private {number} maxHealth      Default value should be set to `health`.
- * @property {number} health
- * @property {number} strength
- * @property {number} speed
- * @property {boolean} isAlive      Default value should be `true`.
- */
-
-
-/**
- * Class => FastZombie(health, strength, speed)
- * -----------------------------
- * Creates a fast zombie.
- *
- * The FastZombie class constructor will call
- *   the super class (Zombie) constructor
- *   while passing in the 3 Zombie constructor params
- *
- * @name FastZombie
- * @param {number} health           The zombie's health.
- * @param {number} strength         The zombie's strength.
- * @param {number} speed            The zombie's speed.
- */
-
-
-/**
- * FastZombie Extends Zombie Class
- * -----------------------------
- */
-
-
-
-/**
- * Class => StrongZombie(health, strength, speed)
- * -----------------------------
- * Creates a strong zombie.
- *
- * The StrongZombie class constructor will call
- *   the super class (Zombie) constructor
- *   while passing in the 3 Zombie constructor params
- *
- * @name StrongZombie
- * @param {number} health           The zombie's health.
- * @param {number} strength         The zombie's strength.
- * @param {number} speed            The zombie's speed.
- */
-
-
-/**
- * StrongZombie Extends Zombie Class
- * -----------------------------
- */
-
-
-
-/**
- * Class => RangedZombie(health, strength, speed)
- * -----------------------------
- * Creates a ranged zombie.
- *
- * The RangedZombie class constructor will call
- *   the super class (Zombie) constructor
- *   while passing in the 3 Zombie constructor params
- *
- * @name RangedZombie
- * @param {number} health           The zombie's health.
- * @param {number} strength         The zombie's strength.
- * @param {number} speed            The zombie's speed.
- */
-
-
-/**
- * RangedZombie Extends Zombie Class
- * -----------------------------
- */
 
 
 
