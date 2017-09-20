@@ -320,6 +320,13 @@ class Player{
       this.eat(item);
     }
   }
+  equippedWith(){
+    if (this.equipped){
+      return this.equipped.name;
+    } else {
+      return false;
+    }
+  }
 }
 
 
