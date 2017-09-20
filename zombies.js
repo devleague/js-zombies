@@ -308,6 +308,28 @@
  */
 
 
+/**
+ * Class => ExplodingZombie(health, strength, speed)
+ * -----------------------------
+ * Creates an exploding zombie.
+ *
+ * The ExplodingZombie class constructor will call
+ *   the super class (Zombie) constructor
+ *   while passing in the 3 Zombie constructor params
+ *
+ * @name ExplodingZombie
+ * @param {number} health           The zombie's health.
+ * @param {number} strength         The zombie's strength.
+ * @param {number} speed            The zombie's speed.
+ */
+
+
+/**
+ * ExplodingZombie Extends Zombie Class
+ * -----------------------------
+ */
+
+
  class Item {
     constructor(name){
       this.name = name;
@@ -459,31 +481,16 @@ class RangedZombie extends Zombie{
   }
 }
 
+class ExplodingZombie extends Zombie{
+  constructor(health, strength, speed){
+    super(health, strength, speed);
+  }
+}
 
 
 
 
 
-/**
- * Class => ExplodingZombie(health, strength, speed)
- * -----------------------------
- * Creates an exploding zombie.
- *
- * The ExplodingZombie class constructor will call
- *   the super class (Zombie) constructor
- *   while passing in the 3 Zombie constructor params
- *
- * @name ExplodingZombie
- * @param {number} health           The zombie's health.
- * @param {number} strength         The zombie's strength.
- * @param {number} speed            The zombie's speed.
- */
-
-
-/**
- * ExplodingZombie Extends Zombie Class
- * -----------------------------
- */
 
 
 
