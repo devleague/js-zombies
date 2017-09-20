@@ -500,7 +500,7 @@ class ExplodingZombie extends Zombie{
  * Feel free to edit this and check your game logic.
  */
 function runGame() {
-  // var player = new Player("Joan", 500, 30, 70);
+  // var player = new Player("Ricky", 500, 30, 70);
   // var zombie = new Zombie(40, 50, 20);
   // var charger = new FastZombie(175, 25, 60);
   // var tank = new StrongZombie(250, 100, 15);
