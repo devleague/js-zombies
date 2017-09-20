@@ -265,18 +265,29 @@ class Player{
 
     }
 
+  }
+  eat(itemToEat){
+    let itemLocation = this._pack.indexOf(itemToEat);
+    if(itemToEat instanceof Food && itemLocation > -1 && (this.health + itemToEat.energy) > this.getMaxHealth()){
+      this._pack.splice(itemLocation, 1);
+      this.health = this.getMaxHealth();
+    } else if (itemToEat instanceof Food && itemLocation > -1) {
+      this.health += itemToEat.energy;
+    } else {
+      console.log("No Food In Bag");
+    }
+  }
 }
-
-
-}
-
-
-
-
-
-
-
-
+// }
+//  if ((food instanceof Food) && (this._pack.indexOf(food) >= 0) && ((this.health + food.energy) > this.getMaxHealth())){
+//       this._pack.splice(this._pack.indexOf(food), 1);
+//       this.health = this.getMaxHealth();
+//       }else if ((food instanceof Food) && (this._pack.indexOf(food) >= 0)){
+//         this._pack.splice(this._pack.indexOf(food), 1);
+//         this.health += food.energy;
+//       }else{
+//         console.log("No food!");
+// }
 /**
  * Player Class Method => eat(itemToEat)
  * -----------------------------
